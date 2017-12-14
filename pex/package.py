@@ -207,6 +207,7 @@ class WheelPackage(Package):
     # See https://github.com/pypa/pip/issues/1150 for why this is unavoidable.
     self._name.replace('_', '-')
     self._raw_version.replace('_', '-')
+    self._arch_tag.replace('manylinux1', "linux")
     self._supported_tags = frozenset(self._iter_tags())
 
   @property
