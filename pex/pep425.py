@@ -7,6 +7,7 @@ PEP425 (http://legacy.python.org/dev/peps/pep-0425/) describes a tagging system 
 whether or not a distribution's platform is compatible with the current platform.  It is the
 tagging system used to describe platform compatibility for wheel files.
 """
+import sysconfig
 
 from pkg_resources import get_supported_platform
 
@@ -102,10 +103,13 @@ class PEP425(object):  # noqa
     if impl == 'cp' and (version.startswith('2') or version.startswith('3')):
       abis.extend([
         'cp%s' % version,
-        'cp%sdmu' % version, 'cp%sdm' % version, 'cp%sdu' % version, 'cp%sd' % version,
-        'cp%smu' % version, 'cp%sm' % version,
-        'cp%su' % version
+        'cp%sdm' % version, 'cp%sd' % version,
+        'cp%sm' % version,
+
       ])
+      if sysconfig.get_config_var('Py_UNICODE_SIZE') == 4:
+        abis.extend(['cp%sdmu' % version, 'cp%sdu' % version,
+                     'cp%smu' % version, 'cp%su' % version])
 
       if version.startswith('3'):
         abis.extend([
