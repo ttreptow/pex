@@ -55,6 +55,9 @@ setup(
   install_requires = [
     SETUPTOOLS_REQUIREMENT,
     WHEEL_REQUIREMENT,
+    'subprocess32>=3.2.7',
+    'requests>=2.8.14',
+    'cachecontrol[filecache]>=0.12.3',
   ],
   extras_require={
     # For improved subprocess robustness under python2.7.
