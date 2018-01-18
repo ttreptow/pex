@@ -265,11 +265,9 @@ class CachingResolver(Resolver):
 
     if packages and self.__cache_ttl:
       packages = self.filter_packages_by_ttl(packages, self.__cache_ttl)
-
-    return itertools.chain(
-      packages,
-      super(CachingResolver, self).package_iterator(resolvable, existing=existing)
-    )
+    if not packages:
+      packages = super(CachingResolver, self).package_iterator(resolvable, existing=existing)
+    return packages
 
   # Caching sandwich.
   def build(self, package, options):
